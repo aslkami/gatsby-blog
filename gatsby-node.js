@@ -78,22 +78,22 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 //   })
 // }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+// exports.onCreateNode = ({ node, getNode, actions }) => {
+//   const { createNodeField } = actions
 
-  if (node.internal.type === "MarkdownRemark") {
-    // console.log(JSON.stringify(node, null, 4))
+//   if (node.internal.type === "MarkdownRemark") {
+//     // console.log(JSON.stringify(node, null, 4))
 
-    const slug = createFilePath({ node, getNode, basePath: `pages` }) //  /fate/
-    const slug2 = path.basename(node.fileAbsolutePath, ".md") // fate
+//     const slug = createFilePath({ node, getNode, basePath: `pages` }) //  /fate/
+//     const slug2 = path.basename(node.fileAbsolutePath, ".md") // fate
 
-    createNodeField({
-      node,
-      name: "slug",
-      value: slug,
-    })
-  }
-}
+//     createNodeField({
+//       node,
+//       name: "slug",
+//       value: slug,
+//     })
+//   }
+// }
 
 // 创建页面
 //
@@ -102,26 +102,24 @@ exports.createPages = async ({ graphql, actions }) => {
   const blogTemplate = path.resolve("./src/templates/blog-template.js")
   const res = await graphql(`
     query {
-      allMarkdownRemark {
+      allContentfulFateBlog {
         edges {
           node {
-            fields {
-              slug
-            }
+            slug
           }
         }
       }
     }
   `)
 
-  res.data.allMarkdownRemark.edges.forEach(({ node }) => {
+  res.data.allContentfulFateBlog.edges.forEach(({ node }) => {
     createPage({
-      path: `/blog${node.fields.slug}`,
+      path: `/blog/${node.slug}`,
       component: blogTemplate,
       context: {
         // Data passed to context is available
         // in page queries as GraphQL variables.
-        slug: node.fields.slug,
+        slug: node.slug,
       },
     })
   })

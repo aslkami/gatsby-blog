@@ -1,4 +1,4 @@
-import { Link, useStaticQuery } from "gatsby"
+import { graphql, Link, useStaticQuery } from "gatsby"
 import React from "react"
 import Layout from "../components/Layout"
 import SEO from "../components/Seo"
@@ -6,18 +6,12 @@ import SEO from "../components/Seo"
 const BlogPage = () => {
   const data = useStaticQuery(graphql`
     query {
-      allMarkdownRemark {
+      allContentfulFateBlog(sort: { fields: publishedDate, order: DESC }) {
         edges {
           node {
-            html
-            excerpt
-            frontmatter {
-              title
-              date(formatString: "MMMM DD, YYYY")
-            }
-            fields {
-              slug
-            }
+            title
+            slug
+            publishedDate(formatString: "MMMM Do, YYYY")
           }
         }
       }
@@ -27,12 +21,12 @@ const BlogPage = () => {
     <Layout>
       <SEO title="FateBlog" />
       <ol>
-        {data.allMarkdownRemark.edges.map(({ node }) => {
+        {data.allContentfulFateBlog.edges.map(({ node }) => {
           return (
             <li>
-              <Link to={`/blog${node.fields.slug}`}>
-                <h2>{node.frontmatter.title}</h2>
-                <p>{node.frontmatter.date}</p>
+              <Link to={`/blog/${node.slug}`}>
+                <h2>{node.title}</h2>
+                <p>{node.publishedDate}</p>
               </Link>
             </li>
           )
