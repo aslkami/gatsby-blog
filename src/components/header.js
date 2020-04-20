@@ -5,7 +5,7 @@ import HeaderStyl from "../styles/header.module.styl"
 
 const Header = ({ siteTitle }) => {
   const data = useStaticQuery(graphql`
-    query siteTitleQuery {
+    query {
       site {
         siteMetadata {
           title

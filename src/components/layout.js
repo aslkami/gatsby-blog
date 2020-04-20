@@ -9,8 +9,8 @@ import PropTypes from "prop-types"
 import React from "react"
 import "typeface-source-sans-pro"
 import "../styles/layout.styl"
-import Footer from "./Footer"
-import Header from "./Header"
+import Footer from "./footer"
+import Header from "./header"
 
 const Layout = ({ children }) => {
   return (

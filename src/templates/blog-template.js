@@ -1,8 +1,8 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { graphql } from "gatsby"
 import React from "react"
-import SEO from "../components/Seo"
-import Layout from "./../components/Layout"
+import SEO from "../components/seo"
+import Layout from "./../components/layout"
 
 export const query = graphql`
   query($slug: String!) {
